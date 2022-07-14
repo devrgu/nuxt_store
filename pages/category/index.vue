@@ -4,6 +4,9 @@
             <div class="title">
                 <p>DIFFERENT STYLES</p>
             </div>
+            <div class="category-containers">
+                
+            </div>
         </div>
     </div>
 </template>
