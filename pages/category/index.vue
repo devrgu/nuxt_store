@@ -5,7 +5,7 @@
                 <p>DIFFERENT STYLES</p>
             </div>
             <div class="category-containers">
-                
+                <p>wccwccwcwdw</p>
             </div>
         </div>
     </div>
