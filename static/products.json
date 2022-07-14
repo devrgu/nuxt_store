@@ -1,0 +1,88 @@
+           titles:[
+                    {
+                        name: 'sunglasses'
+                    },
+                    {
+                        name: 'prescription frames'
+                    },
+                    {
+                        name: 'PROTECTIVE EYEWARE'
+                    }
+                ],
+                cards1:[
+                   {
+                       id: 1,
+                       name: 'Premium Square Sunglasses',
+                       price: 32.95,
+                       src: '/glass-1.png'
+                   },
+                   {
+                       id: 2,
+                       name: 'Premium Cat-Eye Sunglasses',
+                       price: 39.95,
+                       src: '/glass-2.png'
+                   },
+                    {
+                        id: 3,
+                       name: 'Premium Tint Sunglasses',
+                       price: 29.95,
+                       src: '/glass-3.png'
+                   },
+                    {
+                        id: 4,
+                       name: 'Premium Aviator Sunglasses',
+                       price: 39.95,
+                       src: '/glass-4.png'
+                   }
+               ],
+                cards2:[
+                   {
+                       id: 5,
+                       name: 'Square Glasses',
+                       price: 23.95,
+                       src: '/pres-glass-1.png'
+                   },
+                   {
+                       id: 5,
+                       name: 'Aviator Glasses',
+                       price: 32.95,
+                       src: '/pres-glass-2.png'
+                   },
+                    {
+                        id: 6,
+                       name: ' Cat Eye Glasses',
+                       price: 23.95,
+                       src: '/pres-glass-3.png'
+                   },
+                    {
+                        id:7,
+                       name: 'Rimless Glasses',
+                       price: 35.95,
+                       src: '/pres-glass-4.png'
+                   }
+               ],
+                cards3:[
+                   {
+                       id: 8,
+                       name: 'Safety Glasses',
+                       price: 39.95,
+                       src: '/protec-glass-1.png'
+                   },
+                   {
+                       id: 9,
+                       name: 'Protective Glasses',
+                       price: 27.95,
+                       src: '/protec-glass-2.png'
+                   },
+                    {
+                       name: 'Sports Protective Goggles',
+                       price: 45.95,
+                       src: '/protec-glass-3.png'
+                   },
+                    {
+                        id: 10,
+                       name: 'Protective Goggles',
+                       price: 9.95,
+                       src: '/protec-glass-4.png'
+                   }
+               ],
