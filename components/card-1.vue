@@ -1,7 +1,7 @@
 <template>
        <div class="card-container">
                   <div class="card-content">
-                   <div class="card-img">
+                   <div class="card-img glass-img-container">
                        <nuxt-link v-if="typeof placeholder.id !== 'undefined'" :to="{ name: 'cart-id', params:{id: placeholder.id}}">
                         <img :src="placeholder.src">
                         </nuxt-link>

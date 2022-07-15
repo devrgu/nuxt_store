@@ -1,7 +1,18 @@
-<template> </template>
+<template>
+<div class="category-card">
+    <div class="category-img">
+      <img :src="placeholder.img">
+    </div> 
+    <div class="category-title">
+      <p>{{placeholder.title}}</p>
+    </div> 
+</div>
 
-<script>
+</template>
+
+<script scoped>
     export default {
+        props:["placeholder"],
         data () {
             return {
             }
@@ -12,50 +23,27 @@
 </script>
 
 <style>
-    .Loader-container{
-        width: 100%;
-        height:100%;
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 999;
-        overflow: hidden;
-    }
-    .cub-container{
+    .category-card{
+        margin: 36px 53px 36px 53px;
+        width: 563px;
+        height: 208px;
         display: flex;
-        justify-content:center;
         align-items: center;
-        height: inherit;
-        
-        
+        justify-content: space-between;
+        background: #FFFEFE;
+        box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.25);
     }
-    .cub{
-        width: 150px;
-        height: 150px;
-        border: 15px solid rgba(247, 101, 74, 1);
-        border-radius: 50%;
-        border-left-color:rgba(247, 101, 74, 0);;
-        animation: loader 1.3s linear infinite;
+    .category-img{
+        margin-left: 12px;
+        padding: 35px 0 35px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
-    @keyframes loader{
-        25%{
-            transform: rotate(140deg)
-        }
-        50%{
-            transform: rotate(260deg)
-        }
-        75%{
-            transform: rotate(340deg)
-        }
-        100%{
-            transform: rotate(360deg)
-        }
+    .category-title{
+        width: 245px;
+        font-weight: 500;
+        font-size: 24px;
+        text-align: center;
     }
-    .anim-enter-from, .anim-enter-to {
-  transition: opacity 1s;
-    }
-        
-        .anim-leave-from,.anim-leave-active {
-  opacity: 0;
-}
 </style>

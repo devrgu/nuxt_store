@@ -9,8 +9,10 @@
         <li><nuxt-link to="/category">Category</nuxt-link></li>
         <li><nuxt-link to="/location">Location</nuxt-link></li>
         <li><nuxt-link to="/FAQ">FAQ</nuxt-link></li>
-        <div v-if="auth"><li><a><img src="/cart.svg"></a></li>
-        <li><a><img src="/profile.svg"></a></li></div>
+        <div v-if="auth">
+          <li><a><img src="/cart.svg"></a></li>
+          <li><a><img src="/profile.svg"></a></li>
+        </div>
         <li class="sign-button" @click="dialog = true" v-else><a>Sign In</a></li>
     </ul>
 </nav>
@@ -21,20 +23,19 @@
     >
       <v-card height="649">
         <div class="auth-window">
-                <div class="auth-window-content">
-                
-                <div class="auth-window-forms">
-                    <div class="auth-window-logo">
-                    <img src="/logo.svg">
-                </div>
-                   <keep-alive>
-                            <component @ChangeSignIn="ChangeSignIn" @ChangeSignUp="ChangeSignUp" :is="component"></component>
-                    </keep-alive>
-                </div>
-                <div class="auth-window-img">
-                  <img v-show="component === 'SignUp'" src="/side-signup.svg">
-                  <img v-show="component === 'SignIn'" src="/side-signin.svg">
-                </div>
+          <div class="auth-window-content">
+            <div class="auth-window-forms">
+              <div class="auth-window-logo">
+                <img src="/logo.svg">
+              </div>
+              <keep-alive>
+                <component @ChangeSignIn="ChangeSignIn" @ChangeSignUp="ChangeSignUp" :is="component"></component>
+              </keep-alive>
+             </div>
+             <div class="auth-window-img">
+               <img v-show="component === 'SignUp'" src="/side-signup.svg">
+               <img v-show="component === 'SignIn'" src="/side-signin.svg">
+             </div>
             </div>
         </div>
       </v-card>
@@ -115,6 +116,9 @@ export default {
         background: linear-gradient(269.46deg, #A36DA2 0.24%, #59A0C5 96.9%);
 box-shadow: 0px 10px 20px rgba(86, 196, 249, 0.3);
 border-radius: 15px;
+    }
+    .v-dialog__content--active{
+        overflow: hidden;
     }
     .v-card{
         overflow: hidden;

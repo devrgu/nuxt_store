@@ -1,5 +1,8 @@
 <template>
-    <div class="card-like" id="likeC" @click="red()"><img id="likeI" v-if="graylike" src="/Vector.svg"><img id="likeI" v-else src="/Vector-red.svg"></div>
+    <div class="card-like" id="likeC" @click="red()">
+      <img class="like" v-show="graylike" src="/Vector.svg">
+      <img class="red-like" v-show="!graylike" src="/Vector-red.svg">
+    </div>
 </template>
 
 <script>

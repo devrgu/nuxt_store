@@ -1,30 +1,29 @@
 <template>
      <div class="SignIn">
-     <div class="sign-in-content">
-     <div class="title"><p>SIGN IN</p></div>
-     <div class="subtitle"><p>Please sign in to continue</p></div>
-      <v-form ref="forms" @submit.prevent="submit">
-          <v-text-field
-            ref="email"
-            v-model="email"
-            :rules="emailRules"
-            placeholder="Email"
-            :append-icon="'$vuetify.icons.mail'"
-            class="email-input"
-            required
-            
-          ></v-text-field>
-          <v-text-field
-           ref="password"
-            v-model="password"
-            :append-icon="'$lock'"
-            :rules="passwordRules"
-            hint="At least 8 characters"
-            placeholder="Password"
-            counter
-            type="password"
-            color="#1687F7"
-             class="password-input"
+       <div class="sign-in-content">
+         <div class="title"><p>SIGN IN</p></div>
+         <div class="subtitle"><p>Please sign in to continue</p></div>
+         <v-form ref="forms" @submit.prevent="submit">
+           <v-text-field
+             ref="email"
+             v-model="email"
+             :rules="emailRules"
+             placeholder="Email"
+             :append-icon="'$vuetify.icons.mail'"
+             class="email-input"
+             required
+            ></v-text-field>
+            <v-text-field
+              ref="password"
+              v-model="password"
+              :append-icon="'$lock'"
+              :rules="passwordRules"
+              hint="At least 8 characters"
+              placeholder="Password"
+              counter
+              type="password"
+              color="#1687F7"
+              class="password-input"
           ></v-text-field>
           <v-btn
             color="white"
@@ -33,47 +32,45 @@
           >
             Sign In
           </v-btn>
-           <div class="form-description">Haven’t Registered?&nbsp;&nbsp;<span @click="ChangeSignIn">Sign In</span></div>
-      </v-form>
-    </div>
+         <div class="form-description">Haven’t Registered?&nbsp;&nbsp;<span @click="ChangeSignIn">Sign In</span></div>
+        </v-form>
+      </div>
     </div>
 </template>
 <script>
 
   export default {
         data: () => ({
-      email: '',
-      formHasErrors: false,
-        password: '',
-        passwordRules: [
-        v => v.length >= 8 || 'Min 8 characters',
-        v => !!v || 'Password is required',
-        ],
-            emailRules: [
-        ]
-    }),
-      watch: {
-    'email' (val) {
-      this.emailRules = []
-    }},
-
-    methods: {
-      submit () {
-            this.emailRules = [
-        v => !!v || 'E-mail is required',
-        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-        ]
-        let self = this
-      setTimeout(function () {
-        if (self.$refs.forms.validate()){
-          alert('submitted')
-        }  
-      })
+          email: '',
+          password: '',
+          emailRules: [],
+          passwordRules: [
+            v => v.length >= 8 || 'Min 8 characters',
+            v => !!v || 'Password is required',
+          ]
+        }),
+        watch: {
+          'email' (val) {
+            this.emailRules = []
+           }
         },
-         ChangeSignIn(){
-          this.$emit('ChangeSignIn')
-      }
-    } 
+        methods: {
+          submit () {
+            this.emailRules = [
+              v => !!v || 'E-mail is required',
+              v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+            ]
+            let self = this
+            setTimeout(function () {
+              if (self.$refs.forms.validate()){
+                alert('submitted')
+              }  
+            })
+         },
+         ChangeSignIn () {
+           this.$emit('ChangeSignIn')
+         } 
+       } 
   }
 </script>
 <style scoped>

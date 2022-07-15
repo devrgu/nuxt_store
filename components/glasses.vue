@@ -48,9 +48,11 @@
         },
         created(){
             var row = new Array();
-            for(var i = 0; i < 3; i++){
-            row[i] = this.products.cards.filter(product => product.class == this.products.titles[i].name);
-            this.cardrows[i] = row[i];}
+            
+            for(var i = 0; i < 3; i++) {
+              row[i] = this.products.cards.filter(product => product.class == this.products.titles[i].name);
+              this.cardrows[i] = row[i];
+            }
             console.log(this.cardrows[1])
         }
     }
