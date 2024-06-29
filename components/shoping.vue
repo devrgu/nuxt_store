@@ -8,10 +8,10 @@
             return {
             }
         },
-        components: {
-        }
-    }
-</script>
+        components: {                                    
+        } 
+    }       
+</script>                       
 
 <style>
     
