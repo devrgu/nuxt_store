@@ -1,4 +1,5 @@
 const express = require('express');
+<<<<<<< HEAD
 const { loadNuxt, build } = require('nuxt');
 
 const app = express();
@@ -37,3 +38,31 @@ async function start() {
 }
 
 start();
+=======
+const authRouter = require('./authRouter')
+const app = express();
+
+app.use(express.json());
+app.use("/auth", authRouter)
+// Пример маршрута API
+app.get('/api/hello', (req, res) => {
+  res.json({ message: 'Hello from Express!' });
+});
+
+const mongoose = require('mongoose');
+
+const connectDB = async () => {
+  try {
+    await mongoose.connect('mongodb+srv://aubakirovasker60:Askerka00@cluster.jj91tcf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster', {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log('MongoDB connected');
+  } catch (err) {
+    console.error('MongoDB connection error:', err.message);
+    process.exit(1);
+  } 
+}; 
+
+module.exports = app;
+>>>>>>> ef949aa2e8e4b22c291f31a81ace30922246cc2b
