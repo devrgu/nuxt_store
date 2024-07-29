@@ -1,5 +1,5 @@
 <template>
-    <h1>dededed</h1>
+    <h1>LOCATION</h1>
 </template>
 
 <script>

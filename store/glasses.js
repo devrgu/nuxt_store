@@ -1,108 +1,98 @@
 export const state = () => ({
-    titles:[
-                    {
-                        name: 'sunglasses'
-                    },
-                    {
-                        name: 'prescription frames'
-                    },
-                    {
-                        name: 'PROTECTIVE EYEWARE'
-                    }
-                ],
-                cards:[
-                   {
-                       id: 0,
-                       class: 'sunglasses',
-                       name: 'Premium Square Sunglasses',
-                       price: 32.95,
-                       src: '/glass-1.png',
-                       src2: '/glass-1-2.png',
-                       src3: '/glass-1-3.png',
-                       srcmini: '/glass-1-mini.png',
-                       src2mini:'/glass-2-mini.png',
-                       src3mini:'/glass-3-mini.png',
-                       
-                   },
-                   {
-                       id: 1,
-                       class: 'sunglasses',
-                       name: 'Premium Cat-Eye Sunglasses',
-                       price: 39.95,
-                       src: '/glass-2.png'
-                   },
-                    {
-                        id: 2,
-                        class: 'sunglasses',
-                       name: 'Premium Tint Sunglasses',
-                       price: 29.95,
-                       src: '/glass-3.png'
-                   },
-                    {
-                        id: 3,
-                        class: 'sunglasses',
-                       name: 'Premium Aviator Sunglasses',
-                       price: 39.95,
-                       src: '/glass-4.png'
-                    },
-                   {
-                       class: 'prescription frames',
-                       id: 4,
-                       name: 'Square Glasses',
-                       price: 23.95,
-                       src: '/pres-glass-1.png'
-                   },
-                   {
-                       class: 'prescription frames',
-                       id: 5,
-                       name: 'Aviator Glasses',
-                       price: 32.95,
-                       src: '/pres-glass-2.png'
-                   },
-                    {
-                        class: 'prescription frames',
-                        id: 6,
-                       name: ' Cat Eye Glasses',
-                       price: 23.95,
-                       src: '/pres-glass-3.png'
-                   },
-                    {
-                        class: 'prescription frames',
-                        id:7,
-                       name: 'Rimless Glasses',
-                       price: 35.95,
-                       src: '/pres-glass-4.png'
-                   },
-                   {
-                       class: 'PROTECTIVE EYEWARE',
-                       id: 8,
-                       name: 'Safety Glasses',
-                       price: 39.95,
-                       src: '/protec-glass-1.png'
-                   },
-                   {
-                       class: 'PROTECTIVE EYEWARE',
-                       id: 9,
-                       name: 'Protective Glasses',
-                       price: 27.95,
-                       src: '/protec-glass-2.png'
-                   },
-                    {
-                        class: 'PROTECTIVE EYEWARE',
-                        id:10,
-                       name: 'Sports Protective Goggles',
-                       price: 45.95,
-                       src: '/protec-glass-3.png'
-                   },
-                    {
-                        class: 'PROTECTIVE EYEWARE',
-                        id: 11,
-                       name: 'Protective Goggles',
-                       price: 9.95,
-                       src: '/protec-glass-4.png'
-                   }
-                    ]
-})
-      export const getters = {
-          products: state
+  cards: [],
+  titles: [],
+  loading: null,
+  error: null,
+  cart: [],
+});
+
+export const mutations = {
+  SET_CARDS(state, cardsx) {
+    state.cards = cardsx;
+  },
+  SET_TITLE(state, titlesx) {
+    state.titles = titlesx;
+  },
+  SET_LOADING(state, loading) {
+    state.loading = loading;
+  },
+  SET_ERROR(state, error) {
+    state.error = error;
+  },
+  SET_CART(state, cardID) {
+    const cardID_int = parseInt(cardID, 10)
+    state.cart.push(cardID_int);
+    console.log(state.cart, cardID, "add");
+  },
+  DELETE_CART(state, cardID){
+    const cardID_int = parseInt(cardID, 10)
+    const cardIndex = state.cart.findIndex(id => id == cardID)
+    state.cart.splice(cardIndex, 1);
+    console.log(state.cart, cardID_int, "delete")
+
+  }
+};
+
+export const actions = {
+  async addCard({ state }) {
+    try {
+      for (const card of state.cards) {
+        const response = await this.$axios.post(
+          "http://localhost:3000/api/cards",
+          card
+        );
+        console.log("Data saved:", card);
       }
+    } catch (error) {
+      console.error("Error saving data:", error);
+    }
+  },
+  async addCategory({ state }) {
+    try {
+      for (const title of state.titles) {
+        const response = await this.$axios.post(
+          "http://localhost:3000/api/titles",
+          title
+        );
+        console.log("Data saved:", title);
+      }
+    } catch (error) {
+      console.error("Error saving data:", error);
+    }
+  },
+  async fetchCatalog({ commit, state }) {
+    if (state.cards.length > 0 && state.titles.length > 0) {
+      // Данные уже загружены, повторная загрузка не требуется
+      return;
+    }
+    commit("SET_LOADING", true);
+    commit("SET_ERROR", null);
+    try {
+      const [cardsResponse, titlesResponse] = await Promise.all([
+        this.$axios.get("http://localhost:3000/api/cards"),
+        this.$axios.get("http://localhost:3000/api/titles"),
+      ]);
+      console.log("Cards response:", cardsResponse.data); // Логирование данных карточек
+      console.log("Titles response:", titlesResponse.data);
+      commit("SET_CARDS", cardsResponse.data);
+      commit("SET_TITLE", titlesResponse.data);
+    } catch (error) {
+      commit("SET_ERROR", error);
+    } finally {
+      commit("SET_LOADING", false);
+    }
+  },
+  cardBasketAdd({ state, commit }, setCartCandidate) {
+    if (!state.cart.some((card) => card == setCartCandidate)) {
+      commit("SET_CART", setCartCandidate);
+    }
+  }
+};
+
+export const getters = {
+  cards: (state) => state.cards,
+  titles: (state) => state.titles,
+  loading: (state) => state.loading,
+  error: (state) => state.error,
+  cart: (state) => state.cart,
+};

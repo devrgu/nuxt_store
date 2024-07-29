@@ -37,13 +37,14 @@
           Register
         </v-btn>
         <div class="form-description">
-          <p>Already have an account?&nbsp;<span @click="ChangeSignUp">Sign Up +82-32-816-3383ы</span></p>
+          <p>Already have an account?&nbsp;<span @click="ChangeSignUp">Sign In</span></p>
         </div>
       </v-form>
     </div>
   </div>
 </template>
 <script>
+import { mapMutations } from 'vuex'
 
 export default {
   data: () => ({
@@ -70,7 +71,11 @@ export default {
   },
 
   methods: {
-    submit() {
+    ...mapMutations({
+      login: 'auth/login', // Привязка мутации login к методу login
+    }),
+    
+    async submit() {
       this.emailRules = [
         v => !!v || 'E-mail is required',
         v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
@@ -87,11 +92,20 @@ export default {
         (this.password === this.confirmPassword) || 'Password must match'
       ]
       let self = this
-      setTimeout(function () {
-        if (self.$refs.forms.validate()) {
-          alert('submitted')
+      if (self.$refs.forms.validate()) {
+        try {
+          const result = await this.$axios.post('/auth/registration', {
+            username: this.name,
+            email: this.email,
+            phone: this.phone,
+            password: this.password
+          });
+          this.login();
+          this.$emit('Close')
+        } catch (error) {
+          console.log(error)
         }
-      })
+      }
     },
     ChangeSignUp() {
       this.$emit('ChangeSignUp')

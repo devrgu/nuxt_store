@@ -1,6 +1,6 @@
 <template>
-  <header class="content">
-    <nav>
+  <header>
+    <nav class="content">
       <div>
         <img src="/logo.svg">
       </div>
@@ -10,14 +10,14 @@
         <li><nuxt-link to="/location">Location</nuxt-link></li>
         <li><nuxt-link to="/FAQ">FAQ</nuxt-link></li>
         <div v-if="auth">
-          <li><a><img src="/cart.svg"></a></li>
+          <li><nuxt-link to="/cart"><img src="/cart.svg"></nuxt-link></li>
           <li><a><img src="/profile.svg"></a></li>
         </div>
-        <li class="sign-button" @click="dialog = true" v-else><a>Sign In</a></li>
+        <li class="sign-button" @click="dialogAuthOn()" v-else><a>Sign In</a></li>
       </ul>
     </nav>
     <v-app>
-      <v-dialog v-model="dialog" width="1035">
+      <v-dialog v-model="dialogAuth" @input="dialogAuthOff" width="1035">
         <v-card height="649">
           <div class="auth-window">
             <div class="auth-window-content">
@@ -26,7 +26,8 @@
                   <img src="/logo.svg">
                 </div>
                 <keep-alive>
-                  <component @ChangeSignIn="ChangeSignIn" @ChangeSignUp="ChangeSignUp" :is="component"></component>
+                  <component @ChangeSignIn="ChangeSignIn" @ChangeSignUp="ChangeSignUp" @Close="dialogAuthOff"
+                    :is="component"></component>
                 </keep-alive>
               </div>
               <div class="auth-window-img">
@@ -41,7 +42,7 @@
   </header>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import SignIn from '~/components/signIn.vue'
 import SignUp from '~/components/signUp.vue'
 
@@ -52,22 +53,26 @@ export default {
   },
   data() {
     return {
-      dialog: false,
       component: 'SignIn',
     }
   },
   computed: {
     ...mapGetters({
-      auth: 'auth/userAuth'
+      auth: 'auth/userAuth',
+      dialogAuth: 'auth/dialogAuth'
     })
   },
   methods: {
+    ...mapMutations({
+      dialogAuthOn: 'auth/dialogAuthOn',
+      dialogAuthOff: 'auth/dialogAuthOff'
+    }),
     ChangeSignIn() {
       this.component = 'SignUp'
     },
     ChangeSignUp() {
       this.component = 'SignIn'
-    }
+    },
   }
 }
 </script>
@@ -86,7 +91,9 @@ nav li a.nuxt-link-exact-active {
 .content {
   width: calc(1440px - 176px)
 }
-
+header{
+  box-shadow: 0 1px 4px  rgba(0, 0, 0, 0.25);;
+}
 nav {
   display: flex;
   justify-content: space-between;

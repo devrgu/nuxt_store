@@ -1,37 +1,17 @@
 <template>
   <div class="glasses-container">
     <div class="glasses-content">
-      <div class="glasses-cards-1-container glasses-cards-container">
-        <div class="glasses-cards-1-content glasses-cards-content">
-          <div class="glasses-cards-1-title glasses-cards-title">
-            {{ products.titles[0].name }}
-          </div>
-          <card v-for="(row1, i) in this.cardrows[0]" :key="i + 'A'" :placeholder="row1" />
-        </div>
-      </div>
-      <div class="glasses-cards-2-container glasses-cards-container">
-        <div class="glasses-cards-2-content glasses-cards-content">
-          <div class="glasses-cards-2-title glasses-cards-title">
-            {{ products.titles[1].name }}
-          </div>
-          <card v-for="(row2, i) in this.cardrows[1]" :key="i + 'B'" :placeholder="row2" />
-        </div>
-      </div>
-      <div class="glasses-cards-3-container glasses-cards-container">
-        <div class="glasses-cards-3-content glasses-cards-content">
-          <div class="glasses-cards-3-title glasses-cards-title">
-            {{ products.titles[2].name }}
-          </div>
-          <card v-for="(row3, i) in this.cardrows[2]" :key="i + 'C'" :placeholder="row3" />
-        </div>
-      </div>
+      <h2 v-if="loading">LOADING...</h2>
+      <CardsRow v-for="(title, i) in this.titles" :key="i + 'A'" :title="title"/>
     </div>
   </div>
 </template>
 
 <script>
 import card from '~/components/card-1.vue'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
+import CardsRow from './subcomponents/cardsRow.vue';
+
 export default {
   data() {
     return {
@@ -43,17 +23,19 @@ export default {
   },
   computed: {
     ...mapGetters({
-      products: 'glasses/products'
+      cards: 'glasses/cards',
+      titles: 'glasses/titles',
+      loading: 'glasses/loading',
+      error: 'glasses/error'
     })
   },
-  created() {
-    var row = new Array();
+  async created() {
+    await this.fetchCatalog();
+  },
+  methods: {
+    ...mapActions({ fetchCatalog: 'glasses/fetchCatalog' }),
 
-    for (var i = 0; i < 3; i++) {
-      row[i] = this.products.cards.filter(product => product.class == this.products.titles[i].name);
-      this.cardrows[i] = row[i];
-    }
-    console.log(this.cardrows[1])
+    
   }
 }
 </script>

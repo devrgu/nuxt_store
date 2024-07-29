@@ -24,6 +24,11 @@ export default {
         max-width: 1440px;
         margin: 0 auto;
     }
-    header{
-    }
+    .unselectable { 
+      -webkit-user-select: none; 
+      -webkit-touch-callout: none; 
+      -moz-user-select: none; 
+      -ms-user-select: none; 
+      user-select: none;    
+      } 
 </style>

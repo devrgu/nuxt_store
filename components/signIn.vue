@@ -16,12 +16,13 @@
         <v-btn color="white" text @click="submit">
           Sign In
         </v-btn>
-        <div class="form-description">Haven’t Registered?&nbsp;&nbsp;<span @click="ChangeSignIn">Sign In</span></div>
+        <div class="form-description">Haven’t Registered?&nbsp;&nbsp;<span @click="ChangeSignIn">Sign Up</span></div>
       </v-form>
     </div>
   </div>
 </template>
 <script>
+import { mapActions, mapMutations } from 'vuex'
 
 export default {
   data: () => ({
@@ -39,17 +40,34 @@ export default {
     }
   },
   methods: {
-    submit() {
+    ...mapMutations({
+      login: 'auth/login', // Привязка мутации login к методу login
+    }),
+    ...mapActions({
+      addCard: 'glasses/addCard', // Привязка мутации login к методу login
+      addCategory: 'glasses/addCategory', // Привязка мутации login к методу login
+    }),
+
+
+    async submit() {
       this.emailRules = [
         v => !!v || 'E-mail is required',
         v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
       ]
-      let self = this
-      setTimeout(function () {
-        if (self.$refs.forms.validate()) {
-          alert('submitted')
+      let self = this;
+      if (self.$refs.forms.validate()) {
+        try {
+          const result = await this.$axios.post('/auth/login', {
+            email: this.email,
+            password: this.password
+          });
+          this.login();
+          this.addCategory();
+          this.$emit('Close')
+        } catch (error) {
+          console.log(error)
         }
-      })
+      }
     },
     ChangeSignIn() {
       this.$emit('ChangeSignIn')
